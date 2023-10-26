@@ -1,5 +1,9 @@
 import camelot as cm
 import pandas as pd
+from pathlib import Path
+
+home = Path.home()
+default = home / 'Documents'
 
 pdf_filename = input('Copy and paste pdf document file path and name: ')
 pdf_filename = pdf_filename.removeprefix('"')
@@ -11,10 +15,13 @@ num_tables = tables.n
 
 excel_filename = input("Enter name of new excel file with .xlsx extension: ")
 
-writer = pd.ExcelWriter(excel_filename)
+filepath = default / excel_filename
+
+writer = pd.ExcelWriter(filepath)
 
 for i in range(0, num_tables):
     df = tables[i].df
     df.to_excel(writer, sheet_name=f"sheet{i}", index=False)
 
 writer.close()
+print('Excel file has been saved to the Documents folder.')
